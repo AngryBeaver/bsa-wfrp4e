@@ -1,3 +1,6 @@
+# 1.1.1
+- fix skills for foundry v13
+- fix actor and item sheet v13
 # 1.1.0
 - add SkillTest
 - breaking change no dc you need to create a success

@@ -2,7 +2,7 @@
     "title": "Beaver's System Adaption wfrp4e",
     "description": "Warehammer Fantasy Roleplay 4e implementation for Beaver's System Interface",
     "id": "bsa-wfrp4e",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "authors": [
       {
         "name": "angryBeaver",

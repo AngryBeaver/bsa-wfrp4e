@@ -12,6 +12,9 @@ export class Adaption implements SystemApi {
 
     async actorRollSkill(actor, skillId){
         const skills = actor.items.filter(i=>i.type === "skill" && i.name.toLowerCase() === skillId.toLowerCase())
+        if(!skills[0]){
+            skills[0] = {id:"unknown",name:skillId}
+        }
         const test = await actor.setupSkill(skills[0]);
         await test.roll();
         const roll = await new Roll("1d100").roll({async:false});
@@ -24,16 +27,35 @@ export class Adaption implements SystemApi {
     }
 
     actorSheetAddTab(sheet, html, actor, tabData:{ id: string, label: string, html: string }, tabBody:string):void {
+        $(html).find(".beavers-crafting-actor-tab").remove();
         const tabs = $(html).find('nav.tabs');
-        const tabItem = $('<a class="item" data-tab="' + tabData.id + '" title="' + tabData.label + '">'+tabData.label+'</a>');
+        const tabItem = $('<a class="item beavers-crafting-actor-tab" data-group="primary" data-tab="' + tabData.id + '" title="' + tabData.label + '">'+tabData.label+'</a>');
         tabs.append(tabItem);
-        const body = $(html).find("section.content");
-        const tabContent = $('<div class="tab beavers-crafting" data-tab="' + tabData.id + '"></div>');
+        let body = $(html).find("section.content");
+        if(body.length === 0) body = $(html).find(".window-content");
+        const tabContent = $('<div style="background-color:rgba(0,0,0,0.5)" class="tab beavers-crafting-actor-tab" data-group="primary" data-tab="' + tabData.id + '"></div>');
         body.append(tabContent);
         tabContent.append(tabBody);
     }
 
     itemSheetReplaceContent(app, html, element):void {
+        if(html.find('.wfrp4e.item-sheet').length > 0){
+            this.itemSheetReplaceContentLegacy(html,element);
+        }else{
+            this.itemSheetReplaceContentV2(html,element);
+        }
+
+    }
+    itemSheetReplaceContentV2(html, element){
+        const content = html.find('.window-content');
+        const darkend = $("<div style='width:100%;height:100%;background-color:rgba(0,0,0,0.5)'></div>");
+        const header = content.find('header');
+        content.empty();
+        content.append(darkend);
+        darkend.append(header);
+        darkend.append(element);
+    }
+    itemSheetReplaceContentLegacy( html, element){
         const sheetBody = html.find('.wfrp4e.item-sheet');
         const header = sheetBody.find('header');
         const img = sheetBody.find(".item-image");
