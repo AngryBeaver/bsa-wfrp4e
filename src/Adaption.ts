@@ -27,13 +27,13 @@ export class Adaption implements SystemApi {
     }
 
     actorSheetAddTab(sheet, html, actor, tabData:{ id: string, label: string, html: string }, tabBody:string):void {
-        $(html).find(".beavers-crafting-actor-tab").remove();
+        $(html).find(".beavers-actor-tab").remove();
         const tabs = $(html).find('nav.tabs');
-        const tabItem = $('<a class="item beavers-crafting-actor-tab" data-group="primary" data-tab="' + tabData.id + '" title="' + tabData.label + '">'+tabData.label+'</a>');
+        const tabItem = $('<a class="item beavers-actor-tab" data-group="primary" data-tab="' + tabData.id + '" title="' + tabData.label + '">'+tabData.label+'</a>');
         tabs.append(tabItem);
         let body = $(html).find("section.content");
         if(body.length === 0) body = $(html).find(".window-content");
-        const tabContent = $('<div style="background-color:rgba(0,0,0,0.5)" class="tab beavers-crafting-actor-tab" data-group="primary" data-tab="' + tabData.id + '"></div>');
+        const tabContent = $('<div style="overflow-y:auto" class="tab beavers-actor-tab" data-group="primary" data-tab="' + tabData.id + '"></div>');
         body.append(tabContent);
         tabContent.append(tabBody);
     }
@@ -48,12 +48,12 @@ export class Adaption implements SystemApi {
     }
     itemSheetReplaceContentV2(html, element){
         const content = html.find('.window-content');
-        const darkend = $("<div style='width:100%;height:100%;background-color:rgba(0,0,0,0.5)'></div>");
         const header = content.find('header');
+        const scrollAble = $('<div style="overflow-y:auto"></div>')
         content.empty();
-        content.append(darkend);
-        darkend.append(header);
-        darkend.append(element);
+        content.append(scrollAble);
+        scrollAble.append(header);
+        scrollAble.append(element);
     }
     itemSheetReplaceContentLegacy( html, element){
         const sheetBody = html.find('.wfrp4e.item-sheet');

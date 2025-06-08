@@ -1,9 +1,3 @@
-.beavers-crafting.actor-tab .addCrafting
-{
-    background: url(/systems/wfrp4e/ui/sidebar_button-background_red.webp) repeat;
-    background-origin: padding-box;
-    color:white;
-}
 .beavers-crafting .search{
     color: #b43f3f;
 }
@@ -13,13 +7,16 @@
 .beavers-crafting input[type="password"],
 .beavers-crafting input[type="date"],
 .beavers-crafting input[type="time"],
-.beavers-crafting input[type="search"] {
-    color: inherit
-}
-.beavers-crafting.actor-tab .header {
-    color: white;
-    background: url(/systems/wfrp4e/ui/sidebar_button-background_red.webp) repeat !important;
+.beavers-crafting input[type="search"],
+.beavers-crafting textarea,
+.beavers-crafting select
+{
+    color: inherit;
+    background-color: var(--beavers-item-background-color-highlight);
 }
 .beavers-crafting.tab{
     color:#444;
+}
+nav.tabs [data-tab] {
+    color: #444;
 }

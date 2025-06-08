@@ -1,3 +1,5 @@
+# 1.2.0
+- add color theme
 # 1.1.1
 - fix skills for foundry v13
 - fix actor and item sheet v13
