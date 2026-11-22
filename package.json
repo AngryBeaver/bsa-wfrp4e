@@ -1,7 +1,7 @@
 {
   "name": "bsa-wfrp4e",
   "title": "Beaver's System Adaption wfrp4e",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Warhammer Fantasy Roleplay 4e implementation for Beaver's System Interface",
   "#devDir": "c:\\vtts\\v11.315\\Data\\modules",
   "##devDir": "c:\\vtts\\v12.331\\Data\\modules",
