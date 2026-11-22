@@ -1,3 +1,6 @@
+# 1.2.2
+- fix crafting getting stuck on a skill roll with 0 success levels: a marginal success (+0) now counts as a success and a marginal failure (-0) as a failure
+- closing the roll dialog without rolling no longer causes an error
 # 1.2.1
 - fix crafting tab not opening on wfrp4e 10 sheets (ApplicationV2)
 - fix crafting tab colours on the parchment sheet when Foundry uses the dark theme

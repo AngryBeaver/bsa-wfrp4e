@@ -44,6 +44,10 @@ class SkillTestCustomized implements Test<"skill"> {
     public action = async (initiatorData: InitiatorData):Promise<TestResult> => {
         const actor = beaversSystemInterface.initiator(initiatorData).actor;
         const roll = await beaversSystemInterface.actorRollSkill(actor,this.data.skill);
+        if (!roll) {
+            // roll dialog closed without rolling: nothing happens, the check can be rolled again
+            return {success: 0, fail: 0};
+        }
         let success = roll.total
         if(!Settings.get(Settings.ALLOW_CRITICAL)){
             success = Math.max(-1,Math.min(1,roll.total));

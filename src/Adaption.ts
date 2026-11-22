@@ -16,9 +16,15 @@ export class Adaption implements SystemApi {
             skills[0] = {id:"unknown",name:skillId}
         }
         const test = await actor.setupSkill(skills[0]);
+        if (!test) return null; // roll dialog closed without rolling
         await test.roll();
-        const roll = await new Roll("1d100").roll({async:false});
-        roll["_total"] = test.data.result.baseSL;
+        const result = test.result ?? test.data.result;
+        // the success levels are the result: > 0 successes, < 0 failures.
+        // SL 0 is a marginal success (+0) or failure (-0), it must still count as one, wfrp4e tells which by the outcome.
+        let sl = Number(result.baseSL) || 0;
+        if (sl === 0) sl = result.outcome === "success" ? 1 : -1;
+        const roll = await new Roll("1d100").roll();
+        roll["_total"] = sl;
         return roll;
     }
 
