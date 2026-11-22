@@ -27,15 +27,25 @@ export class Adaption implements SystemApi {
     }
 
     actorSheetAddTab(sheet, html, actor, tabData:{ id: string, label: string, html: string }, tabBody:string):void {
-        $(html).find(".beavers-actor-tab").remove();
-        const tabs = $(html).find('nav.tabs');
-        const tabItem = $('<a class="item beavers-actor-tab" data-group="primary" data-tab="' + tabData.id + '" title="' + tabData.label + '">'+tabData.label+'</a>');
+        // html can be stale or a fragment, the sheet element is the live root (wfrp4e >= 8 ApplicationV2 sheets)
+        let root = $(html);
+        if (root.find("nav.tabs").length === 0 && sheet?.element) root = $(sheet.element);
+        root.find(".beavers-actor-tab").remove();
+        const tabs = root.find("nav.tabs").first();
+        if (tabs.length === 0) return;
+        // wfrp4e >= 10 (ApplicationV2) only switches tabs for links with data-action="tab"
+        const tabItem = $('<a class="item beavers-actor-tab" data-action="tab" data-group="primary" data-tab="' + tabData.id + '" title="' + tabData.label + '"></a>');
+        tabItem.append($('<label></label>').text(tabData.label));
         tabs.append(tabItem);
-        let body = $(html).find("section.content");
-        if(body.length === 0) body = $(html).find(".window-content");
-        const tabContent = $('<div style="overflow-y:auto" class="tab beavers-actor-tab" data-group="primary" data-tab="' + tabData.id + '"></div>');
+        let body = root.find("section.content").first();
+        if (body.length === 0) body = root.find(".window-content").first();
+        const tabContent = $('<section style="overflow-y:auto" class="tab beavers-actor-tab" data-group="primary" data-tab="' + tabData.id + '"></section>');
         body.append(tabContent);
         tabContent.append(tabBody);
+        // A re-render while our tab is selected falls back to the default tab, because the system does not know ours.
+        if (typeof sheet?.changeTab === "function" && sheet.tabGroups?.primary === tabData.id) {
+            sheet.changeTab(tabData.id, "primary", { force: true, updatePosition: false });
+        }
     }
 
     itemSheetReplaceContent(app, html, element):void {

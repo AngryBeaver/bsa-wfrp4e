@@ -1,0 +1,16 @@
+/*
+  Crafting tab (and any other beavers tab) inside wfrp4e actor sheets.
+
+  wfrp4e's own theme draws the actor sheet on parchment whatever Foundry's colour scheme is, but it does not reset
+  the text colours, so with Foundry's dark theme the sheet passes a light text colour down. The crafting tab takes
+  its text, lines and hovers from currentColor, which turns it into light-on-parchment.
+  With the wfrp4e theme switched off (.no-theme) the sheet follows Foundry's theme, so nothing is changed there.
+*/
+.wfrp4e.actor.sheet.application:not(.no-theme) .beavers-actor-tab.tab {
+    color-scheme: light;
+    --color-text-primary: var(--color-grey1, #191813);
+    --color-text-secondary: var(--color-grey2, #4b4a44);
+    --color-text-subtle: var(--color-grey2, #4b4a44);
+    --color-text-emphatic: #000;
+    color: var(--color-text-primary);
+}

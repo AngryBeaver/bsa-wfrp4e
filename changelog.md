@@ -1,3 +1,8 @@
+# 1.2.1
+- fix crafting tab not opening on wfrp4e 10 sheets (ApplicationV2)
+- fix crafting tab colours on the parchment sheet when Foundry uses the dark theme
+- remove old crafting css overrides (global tab colour)
+- build with esbuild, release via GitHub workflow
 # 1.2.0
 - add color theme
 # 1.1.1
